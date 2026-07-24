@@ -1,0 +1,574 @@
+openapi: 3.1.0
+info:
+  title: Interfaze Chat API
+  version: 1.0.0
+  description: The Interfaze Chat Completion API Documentation
+  contact:
+    name: Interfaze Support
+    email: support@interfaze.ai
+    url: https://interfaze.ai
+servers:
+- url: https://api.interfaze.ai/v1
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Chat
+paths:
+  /chat/completions:
+    post:
+      operationId: createChatCompletion
+      summary: Create chat completion
+      description: Creates a model response for the given chat conversation.
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+        description: '`Bearer <your-api-key>`'
+      - name: Content-Type
+        in: header
+        required: true
+        schema:
+          type: string
+          default: application/json
+        description: '`application/json`'
+      - name: x-show-additional-info
+        in: header
+        required: false
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          default: 'false'
+        description: Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+      responses:
+        '200':
+          description: Successful chat completion response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+            text/event-stream:
+              description: 'Server-sent events stream when `stream: true`. Each event is a `ChatCompletionChunk`.'
+              schema:
+                $ref: '#/components/schemas/ChatCompletionChunk'
+        '400':
+          description: The request body is malformed or missing required fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: The API key is missing, invalid, or revoked.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '402':
+          description: Your account has insufficient credits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '413':
+          description: Request body or input file exceeds size limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '429':
+          description: You exceeded the rate limit. Retry with exponential backoff.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Server-side failure. Safe to retry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '503':
+          description: Temporary capacity issue. Retry with backoff.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      x-codeSamples:
+      - lang: bash
+        label: cURL
+        source: "curl https://api.interfaze.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $INTERFAZE_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"model\": \"interfaze-beta\",\n    \"messages\": [\n      { \"role\": \"user\", \"content\": \"Who is the founder of Interfaze?\" }\n    ]\n  }'"
+      - lang: typescript
+        label: fetch
+        source: "const response = await fetch(\"https://api.interfaze.ai/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": `Bearer ${process.env.INTERFAZE_API_KEY}`,\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"interfaze-beta\",\n    messages: [\n      { role: \"user\", content: \"Who is the founder of Interfaze?\" },\n    ],\n  }),\n});\n\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+      - lang: typescript
+        label: OpenAI SDK
+        source: "import OpenAI from \"openai\";\n\nconst interfaze = new OpenAI({\n  baseURL: \"https://api.interfaze.ai/v1\",\n  apiKey: process.env.INTERFAZE_API_KEY,\n});\n\nconst response = await interfaze.chat.completions.create({\n  model: \"interfaze-beta\",\n  messages: [\n    { role: \"user\", content: \"Who is the founder of Interfaze?\" },\n  ],\n});\n\nconsole.log(response.choices[0].message.content);"
+      - lang: typescript
+        label: Vercel AI SDK
+        source: "import { createOpenAI } from \"@ai-sdk/openai\";\nimport { generateText } from \"ai\";\n\nconst interfaze = createOpenAI({\n  baseURL: \"https://api.interfaze.ai/v1\",\n  apiKey: process.env.INTERFAZE_API_KEY,\n});\n\nconst { text } = await generateText({\n  model: interfaze.chat(\"interfaze-beta\"),\n  prompt: \"Who is the founder of Interfaze?\",\n});\n\nconsole.log(text);"
+      - lang: typescript
+        label: LangChain SDK
+        source: "import { ChatOpenAI } from \"@langchain/openai\";\n\nconst interfaze = new ChatOpenAI({\n  configuration: {\n    baseURL: \"https://api.interfaze.ai/v1\",\n  },\n  apiKey: process.env.INTERFAZE_API_KEY,\n  model: \"interfaze-beta\",\n});\n\nconst response = await interfaze.invoke(\"Who is the founder of Interfaze?\");\n\nconsole.log(response.content);"
+      - lang: python
+        label: requests
+        source: "import os\nimport requests\n\nresponse = requests.post(\n    \"https://api.interfaze.ai/v1/chat/completions\",\n    headers={\n        \"Authorization\": f\"Bearer {os.environ['INTERFAZE_API_KEY']}\",\n        \"Content-Type\": \"application/json\",\n    },\n    json={\n        \"model\": \"interfaze-beta\",\n        \"messages\": [\n            {\"role\": \"user\", \"content\": \"Who is the founder of Interfaze?\"},\n        ],\n    },\n)\n\nprint(response.json()[\"choices\"][0][\"message\"][\"content\"])"
+      - lang: python
+        label: OpenAI SDK
+        source: "import os\nfrom openai import OpenAI\n\ninterfaze = OpenAI(\n    base_url=\"https://api.interfaze.ai/v1\",\n    api_key=os.environ[\"INTERFAZE_API_KEY\"],\n)\n\nresponse = interfaze.chat.completions.create(\n    model=\"interfaze-beta\",\n    messages=[\n        {\"role\": \"user\", \"content\": \"Who is the founder of Interfaze?\"},\n    ],\n)\n\nprint(response.choices[0].message.content)"
+      - lang: python
+        label: LangChain SDK
+        source: "import os\nfrom langchain_openai import ChatOpenAI\n\ninterfaze = ChatOpenAI(\n    base_url=\"https://api.interfaze.ai/v1\",\n    api_key=os.environ[\"INTERFAZE_API_KEY\"],\n    model=\"interfaze-beta\",\n)\n\nresponse = interfaze.invoke(\"Who is the founder of Interfaze?\")\n\nprint(response.content)"
+      tags:
+      - Chat
+components:
+  schemas:
+    ContentPart:
+      description: A typed content part for multimodal input. Discriminated by `type`.
+      oneOf:
+      - $ref: '#/components/schemas/TextPart'
+      - $ref: '#/components/schemas/ImagePart'
+      - $ref: '#/components/schemas/FilePart'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextPart'
+          image_url: '#/components/schemas/ImagePart'
+          file: '#/components/schemas/FilePart'
+    TextPart:
+      type: object
+      required:
+      - type
+      - text
+      properties:
+        type:
+          type: string
+          const: text
+          description: Must be `"text"`.
+        text:
+          type: string
+          description: The text content.
+    ChatCompletionChunk:
+      type: object
+      description: A single chunk in a streaming response.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the completion.
+        object:
+          type: string
+          const: chat.completion.chunk
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              delta:
+                type: object
+                description: Partial message content.
+                properties:
+                  role:
+                    type: string
+                  content:
+                    type: string
+              finish_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - stop
+                - length
+                - tool_calls
+                - null
+    Choice:
+      type: object
+      description: A single completion choice.
+      properties:
+        index:
+          type: integer
+          description: The index of this choice in the `choices` array.
+        message:
+          $ref: '#/components/schemas/Message'
+        finish_reason:
+          type: string
+          enum:
+          - stop
+          - length
+          - tool_calls
+          description: The reason the model stopped generating. `stop` = natural end or stop sequence, `length` = max tokens reached, `tool_calls` = model wants to call a tool.
+    ErrorEnvelope:
+      type: object
+      description: Error response wrapper.
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorObject'
+      example:
+        error:
+          message: Invalid API key provided.
+          type: invalid_request_error
+          code: invalid_api_key
+    FilePart:
+      type: object
+      required:
+      - type
+      - file
+      properties:
+        type:
+          type: string
+          const: file
+          description: Must be `"file"`.
+        file:
+          type: object
+          required:
+          - filename
+          - file_data
+          description: Wrapper object containing the file source.
+          properties:
+            filename:
+              type: string
+              description: Filename including extension. Used for MIME inference.
+            file_data:
+              type: string
+              description: Publicly accessible URL or base64 data URL (`data:<mime>;base64,...`).
+    ResponseFormat:
+      description: Constrains the model output to a specific format. Follows the [OpenAI structured output specification](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat).
+      oneOf:
+      - type: object
+        title: Text
+        required:
+        - type
+        properties:
+          type:
+            type: string
+            const: text
+            description: Default — plain text output.
+      - type: object
+        title: JSON Schema
+        required:
+        - type
+        - json_schema
+        properties:
+          type:
+            type: string
+            const: json_schema
+            description: JSON schema–constrained output.
+          json_schema:
+            type: object
+            required:
+            - name
+            - schema
+            description: The JSON schema configuration.
+            properties:
+              name:
+                type: string
+                description: Identifier for the schema (e.g. `"id_schema"`).
+              schema:
+                type: object
+                description: A valid JSON Schema definition describing the output shape.
+                additionalProperties: true
+              strict:
+                type: boolean
+                default: false
+                description: Whether to strictly enforce the schema.
+    Message:
+      type: object
+      required:
+      - role
+      - content
+      description: A single message in the conversation.
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          description: The role of the message author.
+        content:
+          description: The message content. Either a plain string or an array of content parts for multimodal input.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              $ref: '#/components/schemas/ContentPart'
+        name:
+          type: string
+          description: Optional name of the participant.
+        tool_calls:
+          type: array
+          description: Assistant-only. Tool calls the model wants the caller to execute.
+          items:
+            $ref: '#/components/schemas/ToolCall'
+        tool_call_id:
+          type: string
+          description: Tool-message-only. The id of the tool call this message is responding to.
+    Usage:
+      type: object
+      description: Token usage statistics.
+      properties:
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the completion.
+        total_tokens:
+          type: integer
+          description: Total tokens used (prompt + completion).
+    ToolChoice:
+      description: Controls which (if any) tool the model calls. `"auto"` = model decides, `"none"` = no tool calls, `"required"` = must call at least one tool, or an object to force a specific function.
+      oneOf:
+      - type: string
+        title: String
+        enum:
+        - auto
+        - none
+        - required
+      - type: object
+        title: Named function
+        required:
+        - type
+        - function
+        properties:
+          type:
+            type: string
+            const: function
+          function:
+            type: object
+            required:
+            - name
+            properties:
+              name:
+                type: string
+                description: The name of the function to force.
+    ErrorObject:
+      type: object
+      description: Error details.
+      properties:
+        message:
+          type: string
+          description: A human-readable error message.
+        type:
+          type: string
+          description: Error type (e.g. `invalid_request_error`, `authentication_error`, `rate_limit_error`).
+          enum:
+          - invalid_request_error
+          - authentication_error
+          - insufficient_quota
+          - payload_too_large
+          - rate_limit_error
+          - internal_error
+          - service_unavailable
+        code:
+          type: string
+          description: A machine-readable error code.
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      description: A tool the model may call.
+      properties:
+        type:
+          type: string
+          const: function
+          description: Always `"function"`.
+        function:
+          $ref: '#/components/schemas/ToolFunction'
+    ToolFunction:
+      type: object
+      required:
+      - name
+      description: The function definition for a tool.
+      properties:
+        name:
+          type: string
+          description: Unique function name (snake_case recommended).
+        description:
+          type: string
+          description: What the function does. Helps the model decide when to call it.
+        parameters:
+          type: object
+          description: JSON Schema describing the function's arguments.
+          additionalProperties: true
+    ChatCompletionRequest:
+      type: object
+      required:
+      - model
+      - messages
+      properties:
+        model:
+          type: string
+          description: Model id to use. Currently the only supported value is `interfaze-beta`.
+          enum:
+          - interfaze-beta
+          example: interfaze-beta
+        messages:
+          type: array
+          description: A list of messages making up the conversation so far.
+          items:
+            $ref: '#/components/schemas/Message'
+        stream:
+          type: boolean
+          default: false
+          description: 'If `true`, partial message deltas are sent as server-sent events. The stream terminates with `data: [DONE]`.'
+        response_format:
+          $ref: '#/components/schemas/ResponseFormat'
+        tools:
+          type: array
+          description: A list of tools (functions) the model may call. Follows the [OpenAI function calling](https://developers.openai.com/api/docs/guides/function-calling?api-mode=chat) schema.
+          items:
+            $ref: '#/components/schemas/Tool'
+        tool_choice:
+          $ref: '#/components/schemas/ToolChoice'
+        reasoning_effort:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          description: Enables extended reasoning. The model spends more compute and thinking tokens before producing a final answer. `low` = light reasoning pass, `medium` = moderate reasoning, `high` = deep reasoning (recommended for math, science, complex agents). When set, the response contains a `reasoning` field. In streaming mode, reasoning tokens stream first inside `<think>...</think>` tags. Off by default.
+        max_tokens:
+          type: integer
+          default: 32000
+          minimum: 1
+          maximum: 32000
+          description: Maximum number of tokens to generate in the completion. Hard upper bound of 32,000 tokens.
+        temperature:
+          type: number
+          default: 1
+          minimum: 0
+          maximum: 2
+          description: Sampling temperature between `0` and `2`. Higher values produce more random output, lower values make the output more focused and deterministic.
+        top_p:
+          type: number
+          default: 1
+          minimum: 0
+          maximum: 1
+          description: Nucleus sampling. The model considers only the tokens whose cumulative probability mass is `top_p`. `0.1` means only the top 10% of probability mass is sampled from. Generally only adjust one of `temperature` or `top_p`.
+    ToolCall:
+      type: object
+      required:
+      - id
+      - type
+      - function
+      description: A tool call requested by the assistant.
+      properties:
+        id:
+          type: string
+          description: Unique id for this tool call.
+        type:
+          type: string
+          const: function
+        function:
+          type: object
+          required:
+          - name
+          - arguments
+          properties:
+            name:
+              type: string
+              description: The function name to call.
+            arguments:
+              type: string
+              description: JSON-encoded arguments for the function.
+    ImagePart:
+      type: object
+      required:
+      - type
+      - image_url
+      properties:
+        type:
+          type: string
+          const: image_url
+          description: Must be `"image_url"`.
+        image_url:
+          type: object
+          required:
+          - url
+          description: Wrapper object containing the image source.
+          properties:
+            url:
+              type: string
+              description: Publicly accessible URL or base64 data URL (`data:image/jpeg;base64,...`).
+    ChatCompletionResponse:
+      type: object
+      description: A successful non-streaming chat completion response.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the completion.
+          example: interfaze-1775270750639
+        object:
+          type: string
+          const: chat.completion
+          description: Always `chat.completion`.
+        model:
+          type: string
+          description: The model used.
+          example: interfaze-beta
+        choices:
+          type: array
+          description: A list of completion choices.
+          items:
+            $ref: '#/components/schemas/Choice'
+        usage:
+          $ref: '#/components/schemas/Usage'
+        reasoning:
+          type: string
+          description: Present when `reasoning_effort` is set. The model's thinking trace.
+        precontext:
+          type: array
+          description: Raw outputs from any internal tasks the model ran (OCR, STT, web search, etc.).
+          items:
+            $ref: '#/components/schemas/PrecontextEntry'
+        vcache:
+          type: boolean
+          description: Whether the response was served from the model's verified cache.
+      example:
+        id: interfaze-1775270750639
+        object: chat.completion
+        model: interfaze-beta
+        choices:
+        - index: 0
+          message:
+            role: assistant
+            content: '{"name":"Yoeven D Khemlani"}'
+          finish_reason: stop
+        usage:
+          prompt_tokens: 10512
+          completion_tokens: 7056
+          total_tokens: 17568
+        vcache: false
+        precontext:
+        - name: web_search
+          result:
+          - title: Interfaze | Y Combinator
+            url: https://www.ycombinator.com/companies/interfaze
+            description: AI model built for deterministic developer tasks.
+    PrecontextEntry:
+      type: object
+      description: Raw output from an internal task the model performed.
+      properties:
+        name:
+          type: string
+          description: The task that produced this result (e.g. `ocr`, `stt`, `translate`, `web_search`, `scraper`, `object_detection`, `guardrails`, `code_sandbox`).
+        result:
+          description: The structured metadata for the task. Shape varies per task type.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API key obtained from the [dashboard](https://interfaze.ai/dashboard).
