@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Interfaze API
+  version: 1.0.0
+extends: openapi/interfaze-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 4
+    x-apievangelist-notes: >-
+      Single OpenAI-compatible /chat/completions endpoint; multimodal deterministic-task model.
+      Strengths: verbatim OpenAPI 3.1 with rich schemas, x-codeSamples, published Agent Skills,
+      Agent Card, and llms.txt. Gaps: no application/problem+json error format (uses OpenAI-style
+      error envelope), no OAuth2, no webhook/event surface, no first-party SDK or CLI.
+- target: $.info
+  update:
+    x-agent-ready: true
+    x-agent-surfaces:
+    - agent-skills
+    - agent-card
+    - llms-txt
+- target: $.paths['/chat/completions'].post
+  update:
+    x-idempotency: none
+    x-streaming: server-sent-events
+    x-rate-limit: 50 requests/second (standard tier)
+- target: $.components.schemas.ErrorEnvelope
+  update:
+    x-error-format: openai-error-envelope
+    x-not-rfc9457: true

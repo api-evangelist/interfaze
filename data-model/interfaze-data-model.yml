@@ -1,0 +1,62 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/interfaze-openapi-original.json
+note: >-
+  Entity graph derived from the OpenAPI component schemas of the single /chat/completions endpoint.
+  This is a request/response object model (no persistent resources / no id-reference domains).
+entities:
+- name: ChatCompletionRequest
+  description: Inbound request; the model plus the conversation and generation controls.
+  relationships:
+  - has_many: Message
+    via: messages
+  - has_one: ResponseFormat
+    via: response_format
+  - has_many: Tool
+    via: tools
+  - has_one: ToolChoice
+    via: tool_choice
+- name: Message
+  description: A single conversation message (system/user/assistant/tool).
+  relationships:
+  - has_many: ContentPart
+    via: content
+  - has_many: ToolCall
+    via: tool_calls
+- name: ContentPart
+  description: Discriminated multimodal content part (text/image_url/file).
+  subtypes: [TextPart, ImagePart, FilePart]
+- name: Tool
+  description: A callable function tool.
+  relationships:
+  - has_one: ToolFunction
+    via: function
+- name: ChatCompletionResponse
+  description: Non-streaming completion result.
+  relationships:
+  - has_many: Choice
+    via: choices
+  - has_one: Usage
+    via: usage
+  - has_many: PrecontextEntry
+    via: precontext
+- name: Choice
+  description: A single completion choice with a message and finish_reason.
+  relationships:
+  - has_one: Message
+    via: message
+- name: Usage
+  description: Token accounting (prompt/completion/total).
+- name: PrecontextEntry
+  description: Raw verifiable output from an internal task (ocr, stt, web_search, scraper, etc.).
+- name: ChatCompletionChunk
+  description: Streaming delta chunk (object chat.completion.chunk).
+- name: ErrorEnvelope
+  description: Error wrapper.
+  relationships:
+  - has_one: ErrorObject
+    via: error
+key_facts:
+  completion_id_prefix: 'interfaze-'
+  completion_id_example: interfaze-1775270750639
+  model_id: interfaze-beta

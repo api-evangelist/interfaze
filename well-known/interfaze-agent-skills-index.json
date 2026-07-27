@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "object-detection",
+      "type": "skill-md",
+      "description": "Use Interfaze AI to detect, locate, and identify objects in images and PDFs with bounding box coordinates. Activate when the user wants to find objects, get their positions, count items, or locate specific things in an image — even if they say \"find the car in this photo\", \"where is the logo\", or \"what objects are in this image\" without explicitly mentioning object detection.",
+      "url": "/.well-known/agent-skills/object-detection/SKILL.md",
+      "digest": "sha256:a784b7fd89b6bea26bd1ee55e90cc8b0f9d89df28e060e046f8d153877b76c2d"
+    },
+    {
+      "name": "ocr",
+      "type": "skill-md",
+      "description": "Use Interfaze AI for OCR and visual text extraction from images, screenshots, scans, PDFs, invoices, receipts, IDs, forms, menus, and labels with complex layouts. Activate when the user wants to extract text, fields, or structured data from an image or scanned document — even if they say \"read this\", \"what does this say\", or \"pull the data from this photo\" without mentioning OCR.",
+      "url": "/.well-known/agent-skills/ocr/SKILL.md",
+      "digest": "sha256:65e0c8aaa7a0c7452d1a0b4a0fbeb2277b9c8605783aefa4c5a53f4384574f0b"
+    },
+    {
+      "name": "speech-to-text",
+      "type": "skill-md",
+      "description": "Use Interfaze AI for speech-to-text transcription from audio files, voice notes, recordings, podcasts, and meeting audio. Activate when the user wants to transcribe audio to text, identify speakers, detect language, or extract timestamps — even if they say \"what did they say in this recording\" or \"convert this audio to text\" without explicitly mentioning transcription.",
+      "url": "/.well-known/agent-skills/speech-to-text/SKILL.md",
+      "digest": "sha256:ffda7a0adc57790186b4a1762ffad7ee1498fc656d6979c7b2b9fe290f1eac73"
+    },
+    {
+      "name": "structured-output",
+      "type": "skill-md",
+      "description": "Use Interfaze AI to produce strict JSON or schema-constrained structured objects from any prompt. Activate when the user needs typed, machine-readable output — JSON objects, arrays, validated fields, or Zod/Pydantic-style extraction. Use this when the task requires a specific output shape, data normalization, or converting unstructured text into structured records, even if the user just says \"give me this as JSON\" or \"parse this into fields.\"",
+      "url": "/.well-known/agent-skills/structured-output/SKILL.md",
+      "digest": "sha256:27ee0b65dfccc75dfdaec902e425dc301e41681420b7fe6eaec86f4a991b2612"
+    },
+    {
+      "name": "web-scraping",
+      "type": "skill-md",
+      "description": "Use Interfaze AI to scrape and extract structured data from specific web pages and URLs. Activate when the user provides a URL and wants to pull products, listings, prices, profiles, or any structured content from that page — even if they say \"get the data from this page\", \"pull the listings from this URL\", or \"extract products from this site\" without explicitly mentioning scraping.",
+      "url": "/.well-known/agent-skills/web-scraping/SKILL.md",
+      "digest": "sha256:d13679ed2dd00204376ba317bb89e5cff8a1b2d72a3b2e43d8100f48777aaa90"
+    },
+    {
+      "name": "web-search",
+      "type": "skill-md",
+      "description": "Use Interfaze AI to search the web and retrieve current information, facts, prices, news, or any real-time data. Activate when the user needs up-to-date information from the internet, wants to look something up, or asks a question that requires current knowledge — even if they say \"look this up\", \"find out about\", or \"what's the latest on\" without explicitly mentioning web search.",
+      "url": "/.well-known/agent-skills/web-search/SKILL.md",
+      "digest": "sha256:bf2ffa9c9dfb1fe1b2226d8dba54563be5dc05fe60af889ece1441dd3203b772"
+    }
+  ]
+}

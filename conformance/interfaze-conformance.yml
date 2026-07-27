@@ -1,0 +1,42 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/interfaze-openapi-original.json
+docs: https://interfaze.ai/docs
+standards:
+- id: openai-chat-completions-compat
+  conforms: true
+  evidence: >-
+    /chat/completions request/response follow the OpenAI Chat Completions schema; works with the
+    OpenAI, Vercel AI, and LangChain SDKs by swapping baseURL (x-codeSamples in the OpenAPI).
+- id: http-bearer-auth
+  conforms: true
+  evidence: securitySchemes.bearerAuth type http scheme bearer (Authorization Bearer API key).
+- id: sse-streaming
+  conforms: true
+  evidence: 200 response offers text/event-stream ChatCompletionChunk; stream terminates with data [DONE].
+- id: openai-function-calling
+  conforms: true
+  evidence: Tool / ToolChoice / ToolCall schemas follow the OpenAI function-calling schema.
+- id: openai-structured-outputs
+  conforms: true
+  evidence: response_format json_schema (strict) follows the OpenAI structured-output specification.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme; auth is a bearer API key only.
+- id: openid-connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: "Errors use an OpenAI-style { error: { message, type, code } } envelope, not application/problem+json."
+- id: rfc8594-sunset
+  conforms: false
+  evidence: No documented Sunset/Deprecation header support.
+- id: soc2
+  conforms: false
+  status: available-on-enterprise
+  evidence: Pricing page advertises SOC2 compliance agreements for enterprise/custom plans; no published certification or trust center found.
+- id: hipaa
+  conforms: false
+  status: available-on-enterprise
+  evidence: Pricing page advertises HIPAA compliance agreements for enterprise/custom plans; no published certification or trust center found.

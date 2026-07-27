@@ -1,0 +1,24 @@
+generated: '2026-07-19'
+method: searched
+source: https://interfaze.ai/docs
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.interfaze.ai/v1
+  docs: https://interfaze.ai/docs
+model_stage:
+  model: interfaze-beta
+  stage: beta
+  note: The only supported model id is interfaze-beta; the product is in public beta.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal deprecation/sunset policy or RFC 8594 Sunset header support documented as of this
+    profiling. Model versioning is communicated through the blog and dated update posts.
+sla:
+  url: https://interfaze.ai/pricing
+  note: SLAs available on enterprise/custom plans; no published uptime target on the standard tier.
+status_page: https://status.interfaze.ai
+status_page_provider: BetterStack
+deprecated_operations: []

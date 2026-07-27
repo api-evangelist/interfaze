@@ -1,0 +1,62 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/interfaze-openapi-original.json
+docs: https://interfaze.ai/docs/limits
+format: openai-error-envelope
+envelope:
+  shape: '{ "error": { "message": string, "type": string, "code": string } }'
+  note: >-
+    Not RFC 9457 application/problem+json. Errors follow the OpenAI-style error envelope with a
+    machine-readable type (enum) and a code string.
+error_types:
+- type: invalid_request_error
+  description: The request body is malformed or missing required fields.
+- type: authentication_error
+  description: The API key is missing, invalid, or revoked.
+- type: insufficient_quota
+  description: The account has insufficient credits.
+- type: payload_too_large
+  description: Request body or input file exceeds size limits.
+- type: rate_limit_error
+  description: The rate limit was exceeded; retry with exponential backoff.
+- type: internal_error
+  description: Server-side failure; safe to retry.
+- type: service_unavailable
+  description: Temporary capacity issue; retry with backoff.
+problems:
+- status: 400
+  error_type: invalid_request_error
+  title: Bad request
+  detail: The request body is malformed or missing required fields.
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+- status: 401
+  error_type: authentication_error
+  title: Unauthorized
+  detail: The API key is missing, invalid, or revoked.
+  example_code: invalid_api_key
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+- status: 402
+  error_type: insufficient_quota
+  title: Payment required
+  detail: The account has insufficient credits.
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+- status: 413
+  error_type: payload_too_large
+  title: Payload too large
+  detail: Request body or input file exceeds size limits (20 MB direct upload, 80 MB via URL).
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+- status: 429
+  error_type: rate_limit_error
+  title: Too many requests
+  detail: Rate limit exceeded (50 requests/second standard). Retry with exponential backoff.
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+- status: 500
+  error_type: internal_error
+  title: Internal server error
+  detail: Server-side failure. Safe to retry.
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+- status: 503
+  error_type: service_unavailable
+  title: Service unavailable
+  detail: Temporary capacity issue. Retry with backoff.
+  source_operation: openapi/interfaze-openapi-original.json#createChatCompletion

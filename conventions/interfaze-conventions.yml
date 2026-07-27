@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: searched
+source: https://interfaze.ai/docs
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <INTERFAZE_API_KEY>'
+  key_management: https://interfaze.ai/dashboard
+  ref: authentication/interfaze-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    No idempotency-key header/parameter is documented. /chat/completions is a stateless generation
+    call; retries are governed by the retry-safe 5xx/429 error classes rather than an idempotency key.
+pagination:
+  supported: false
+  note: Single generation endpoint; no list operations, so no pagination surface.
+streaming:
+  supported: true
+  style: server-sent-events
+  param: 'stream: true'
+  terminator: 'data: [DONE]'
+  reasoning_stream: Reasoning tokens stream first inside <think>...</think> when reasoning_effort is set.
+structured_output:
+  supported: true
+  mechanism: response_format json_schema (strict) following the OpenAI structured-output spec.
+tool_calling:
+  supported: true
+  mechanism: OpenAI-compatible tools[] / tool_choice function calling.
+precontext:
+  header: 'x-show-additional-info: true'
+  note: >-
+    Verifiable raw outputs from internal tasks (ocr, stt, translate, web_search, scraper,
+    object_detection, guardrails, code_sandbox) are returned in a response `precontext` array; set
+    the header to inline precontext at the start of a streamed response.
+versioning:
+  style: uri-path
+  current: v1
+  ref: lifecycle/interfaze-lifecycle.yml
+error_envelope:
+  shape: '{ "error": { "message": string, "type": string, "code": string } }'
+  format: openai-error-envelope
+  ref: errors/interfaze-problem-types.yml
+rate_limiting:
+  standard_limit: 50 requests/second
+  higher: Available on request / enterprise (unlimited).
+  signal: 429 rate_limit_error; retry with exponential backoff.
+  ref: https://interfaze.ai/docs/limits
+size_limits:
+  max_request_duration: 5 minutes
+  direct_file_upload: 20 MB
+  url_referenced_file: 80 MB
+  context_window: 1,000,000 tokens
+  max_output: 32,000 tokens

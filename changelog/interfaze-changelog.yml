@@ -1,0 +1,46 @@
+generated: '2026-07-19'
+method: searched
+source: https://interfaze.ai/blog
+scheme: dated-blog-updates
+note: >-
+  Interfaze communicates releases through dated "Interfaze Updates" posts and model/benchmark
+  announcements on its blog rather than a discrete changelog page. The model id is interfaze-beta
+  (public beta). Recent window captured below.
+current_version: interfaze-beta
+entries:
+- date: '2026-07-07'
+  title: 'Interfaze Updates: Home page playground, Diffusion Gemma ASR, Claude Sonnet 5 & Mistral OCR 4 benchmarks and more'
+  type: additions
+  url: https://interfaze.ai/blog
+- date: '2026-07-02'
+  title: The First Open Source Diffusion Audio ASR Model
+  type: additions
+  url: https://interfaze.ai/blog
+- date: '2026-05-28'
+  title: 'Interfaze Updates: OCR improvements, Gemini 3.5 benchmarks, STT word level accuracy, caching and more'
+  type: additions
+  url: https://interfaze.ai/blog
+- date: '2026-05-11'
+  title: 'Interfaze: A new model architecture built for high accuracy at scale'
+  type: highlight
+  url: https://interfaze.ai/blog
+- date: '2026-05-06'
+  title: 'Interfaze Updates: Postgres LLM, Vercel AI gateway, SOB Updates, Scraper and more'
+  type: additions
+  url: https://interfaze.ai/blog
+- date: '2026-04-20'
+  title: 'Interfaze Updates: GUI Detection, #1 OCR Benchmark, Faster Reasoning & Smarter Scraping'
+  type: additions
+  url: https://interfaze.ai/blog
+- date: '2026-04-13'
+  title: 'Updates: We got into YC P26, faster responses, OCR improvements and more'
+  type: highlight
+  url: https://interfaze.ai/blog
+- date: '2026-03-26'
+  title: 'Interfaze <> JigsawStack: Branding change & Improvements'
+  type: highlight
+  url: https://interfaze.ai/blog
+- date: '2025-10-07'
+  title: Interfaze Beta v0.1
+  type: highlight
+  url: https://interfaze.ai/blog

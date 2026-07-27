@@ -1,0 +1,14 @@
+{
+  "provider": "interfaze",
+  "sources": [
+    "interfaze-chat-api-openapi.yml"
+  ],
+  "outputs": [
+    "interfaze-chat-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,34 @@
+generated: '2026-07-19'
+method: searched
+source: https://interfaze.ai
+hosts:
+- host: https://interfaze.ai
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: interfaze-agent-card.json
+    note: A2A-style Agent Card (protocolVersion 0.3) advertising Interfaze skills.
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: interfaze-agent-skills-index.json
+    note: Agent Skills discovery index (schemas.agentskills.io 0.2.0) listing 6 SKILL.md files.
+  - path: /ai.txt
+    status: 200
+    file: interfaze-ai.txt
+    note: llms.txt mirror served at /ai.txt.
+  - path: /llms.txt
+    status: 200
+    file: ../llms/interfaze-llms.txt
+    note: Machine-readable site/API index (saved under llms/).
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.interfaze.ai
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
