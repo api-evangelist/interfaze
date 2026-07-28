@@ -1,0 +1,37 @@
+generated: '2026-07-28'
+method: probed
+source: https://interfaze.ai/.well-known/agent-card.json
+description: 'A2A Agent Card observed at /.well-known/agent-card.json on interfaze.ai. Grade is measured
+  against the A2A 1.0.0 AgentCard object: ''conformant'' passes every structural check, ''near-conformant''
+  is correctly shaped but omits optional fields, ''flavored'' fails a hard check and is an agent card
+  in spirit rather than in schema. Provider-published by construction — served from the provider''s own
+  host; nothing here is derived or generated.'
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: interfaze.ai
+conformance:
+  spec: A2A 1.0.0
+  grade: near-conformant
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  deviations:
+  - nonstandard-supportedInterfaces
+  - no-url
+  - no-version
+card:
+  name: Interfaze AI
+  description: Use Interfaze AI — a multimodal, OpenAI-compatible API (model `interfaze-beta`) — for OCR,
+    speech-to-text, structured output, object detection, web search, and web scraping through a single
+    endpoint.
+  url: null
+  version: null
+  documentation_url: https://interfaze.ai/docs
+  skills: 6
+  file: interfaze-agent-card.json
+x-evidence:
+  fetched: '2026-07-28'
+  url: https://interfaze.ai/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  note: Verbatim body saved alongside this manifest. No field inferred.

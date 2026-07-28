@@ -1,0 +1,84 @@
+{
+  "protocolVersion": "0.3",
+  "name": "Interfaze AI",
+  "description": "Use Interfaze AI \u2014 a multimodal, OpenAI-compatible API (model `interfaze-beta`) \u2014 for OCR, speech-to-text, structured output, object detection, web search, and web scraping through a single endpoint.",
+  "preferredTransport": "HTTP+JSON",
+  "provider": {
+    "url": "https://interfaze.ai",
+    "organization": "Interfaze AI"
+  },
+  "documentationUrl": "https://interfaze.ai/docs",
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "url": "https://interfaze.ai/.well-known/agent-skills/index.json",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "0.3"
+    }
+  ],
+  "skills": [
+    {
+      "id": "object-detection",
+      "name": "object-detection",
+      "description": "Use Interfaze AI to detect, locate, and identify objects in images and PDFs with bounding box coordinates. Activate when the user wants to find objects, get their positions, count items, or locate specific things in an image \u2014 even if they say \"find the car in this photo\", \"where is the logo\", or \"what objects are in this image\" without explicitly mentioning object detection.",
+      "tags": [
+        "interfaze"
+      ],
+      "url": "https://interfaze.ai/.well-known/agent-skills/object-detection/SKILL.md"
+    },
+    {
+      "id": "ocr",
+      "name": "ocr",
+      "description": "Use Interfaze AI for OCR and visual text extraction from images, screenshots, scans, PDFs, invoices, receipts, IDs, forms, menus, and labels with complex layouts. Activate when the user wants to extract text, fields, or structured data from an image or scanned document \u2014 even if they say \"read this\", \"what does this say\", or \"pull the data from this photo\" without mentioning OCR.",
+      "tags": [
+        "interfaze"
+      ],
+      "url": "https://interfaze.ai/.well-known/agent-skills/ocr/SKILL.md"
+    },
+    {
+      "id": "speech-to-text",
+      "name": "speech-to-text",
+      "description": "Use Interfaze AI for speech-to-text transcription from audio files, voice notes, recordings, podcasts, and meeting audio. Activate when the user wants to transcribe audio to text, identify speakers, detect language, or extract timestamps \u2014 even if they say \"what did they say in this recording\" or \"convert this audio to text\" without explicitly mentioning transcription.",
+      "tags": [
+        "interfaze"
+      ],
+      "url": "https://interfaze.ai/.well-known/agent-skills/speech-to-text/SKILL.md"
+    },
+    {
+      "id": "structured-output",
+      "name": "structured-output",
+      "description": "Use Interfaze AI to produce strict JSON or schema-constrained structured objects from any prompt. Activate when the user needs typed, machine-readable output \u2014 JSON objects, arrays, validated fields, or Zod/Pydantic-style extraction. Use this when the task requires a specific output shape, data normalization, or converting unstructured text into structured records, even if the user just says \"give me this as JSON\" or \"parse this into fields.\"",
+      "tags": [
+        "interfaze"
+      ],
+      "url": "https://interfaze.ai/.well-known/agent-skills/structured-output/SKILL.md"
+    },
+    {
+      "id": "web-scraping",
+      "name": "web-scraping",
+      "description": "Use Interfaze AI to scrape and extract structured data from specific web pages and URLs. Activate when the user provides a URL and wants to pull products, listings, prices, profiles, or any structured content from that page \u2014 even if they say \"get the data from this page\", \"pull the listings from this URL\", or \"extract products from this site\" without explicitly mentioning scraping.",
+      "tags": [
+        "interfaze"
+      ],
+      "url": "https://interfaze.ai/.well-known/agent-skills/web-scraping/SKILL.md"
+    },
+    {
+      "id": "web-search",
+      "name": "web-search",
+      "description": "Use Interfaze AI to search the web and retrieve current information, facts, prices, news, or any real-time data. Activate when the user needs up-to-date information from the internet, wants to look something up, or asks a question that requires current knowledge \u2014 even if they say \"look this up\", \"find out about\", or \"what's the latest on\" without explicitly mentioning web search.",
+      "tags": [
+        "interfaze"
+      ],
+      "url": "https://interfaze.ai/.well-known/agent-skills/web-search/SKILL.md"
+    }
+  ]
+}

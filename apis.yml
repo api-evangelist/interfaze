@@ -63,6 +63,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgentCard
+  url: a2a/interfaze-a2a.yml
+  name: A2A Agent Card
+  description: Agent Card served at /.well-known/agent-card.json (near-conformant against A2A 1.0.0).
 - type: DeveloperPortal
   url: https://interfaze.ai/docs
 - type: Documentation
