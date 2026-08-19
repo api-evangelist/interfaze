@@ -1,0 +1,656 @@
+{
+  "item": [
+    {
+      "id": "cacd1133-869d-426d-9bbe-1696a653ab11",
+      "name": "Chat",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "737c4704-80c2-4453-9cc1-6c7ddc805507",
+          "name": "Create chat completion",
+          "request": {
+            "name": "Create chat completion",
+            "description": {
+              "content": "Creates a model response for the given chat conversation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                "key": "x-show-additional-info",
+                "value": "false"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_calls\": [\n        {\n          \"id\": \"<string>\",\n          \"type\": \"<string>\",\n          \"function\": {\n            \"name\": \"<string>\",\n            \"arguments\": \"<string>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"type\": \"<string>\",\n          \"function\": {\n            \"name\": \"<string>\",\n            \"arguments\": \"<string>\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"<string>\"\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_calls\": [\n        {\n          \"id\": \"<string>\",\n          \"type\": \"<string>\",\n          \"function\": {\n            \"name\": \"<string>\",\n            \"arguments\": \"<string>\"\n          }\n        },\n        {\n          \"id\": \"<string>\",\n          \"type\": \"<string>\",\n          \"function\": {\n            \"name\": \"<string>\",\n            \"arguments\": \"<string>\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"<string>\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": false\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": 1758.4232571064163\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"<string>\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c17c9c23-a0e5-4550-b752-bd09c43f931f",
+              "name": "Successful chat completion response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"interfaze-1775270750639\",\n  \"object\": \"string\",\n  \"model\": \"interfaze-beta\",\n  \"choices\": [\n    {\n      \"index\": 2619,\n      \"message\": {\n        \"role\": \"system\",\n        \"content\": \"string\",\n        \"name\": \"string\",\n        \"tool_calls\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"string\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"string\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"tool_call_id\": \"string\"\n      },\n      \"finish_reason\": \"tool_calls\"\n    },\n    {\n      \"index\": 2260,\n      \"message\": {\n        \"role\": \"system\",\n        \"content\": \"string\",\n        \"name\": \"string\",\n        \"tool_calls\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"string\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"string\",\n            \"function\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"arguments\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          }\n        ],\n        \"tool_call_id\": \"string\"\n      },\n      \"finish_reason\": \"tool_calls\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 535,\n    \"completion_tokens\": 918,\n    \"total_tokens\": 4968\n  },\n  \"reasoning\": \"string\",\n  \"precontext\": [\n    {\n      \"name\": \"string\",\n      \"result\": {}\n    },\n    {\n      \"name\": \"string\",\n      \"result\": {}\n    }\n  ],\n  \"vcache\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a10c868-7caa-4f55-8af4-ee1b23e52c70",
+              "name": "The request body is malformed or missing required fields.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10aae404-6972-457e-b1a0-e3e5733247d8",
+              "name": "The API key is missing, invalid, or revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f68781f0-77ea-4c5d-b073-fd068d81252f",
+              "name": "Your account has insufficient credits.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64246494-b93d-48ce-b00e-720253decfab",
+              "name": "Request body or input file exceeds size limits.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "199534e5-c0db-4182-9eb5-1d9bfe9a3263",
+              "name": "You exceeded the rate limit. Retry with exponential backoff.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b609aec9-4594-4cb1-b7df-46c2b080ca41",
+              "name": "Server-side failure. Safe to retry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10df2d67-a0bb-49a0-9f74-25cb5a32ddb7",
+              "name": "Temporary capacity issue. Retry with backoff.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `Bearer <your-api-key>`",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) `application/json`",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Set to `true` to include [precontext](https://interfaze.ai/docs/precontext) inline at the start of a streamed response. Defaults to `false`.",
+                    "key": "x-show-additional-info",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"interfaze-beta\",\n  \"messages\": [\n    {\n      \"role\": \"assistant\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    },\n    {\n      \"role\": \"system\",\n      \"content\": \"string\",\n      \"name\": \"string\",\n      \"tool_calls\": [\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"type\": \"string\",\n          \"function\": {\n            \"name\": \"string\",\n            \"arguments\": \"string\"\n          }\n        }\n      ],\n      \"tool_call_id\": \"string\"\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"string\"\n  },\n  \"tools\": [\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": 217.69414309328883,\n          \"key_2\": 6087,\n          \"key_3\": 3755\n        }\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"function\": {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"parameters\": {\n          \"key_0\": 477.1588187586773\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"none\",\n  \"reasoning_effort\": \"<string>\",\n  \"max_tokens\": 32000,\n  \"temperature\": 1,\n  \"top_p\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Invalid API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.interfaze.ai/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "2ced4b24-f760-4d0e-ae2b-c9e76e94376a",
+    "name": "Interfaze Chat API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Interfaze Chat Completion API Documentation\n\nContact Support:\n Name: Interfaze Support\n Email: support@interfaze.ai",
+      "type": "text/plain"
+    }
+  }
+}

@@ -2,20 +2,23 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/interfaze-openapi-original.json
-note: >-
-  Interfaze publishes no first-party hosted MCP server (the JigsawStack MCP server at
-  github.com/InterfazeAI/jigsawstack-mcp-server targets the separate JigsawStack API, not the
-  interfaze-beta Chat Completion API). This is a DERIVED candidate tool surface generated from the
-  OpenAPI so the single endpoint can be wrapped as an MCP tool. Interfaze exposes its agentic
-  surface primarily as Agent Skills (skills/) and an A2A Agent Card (well-known/).
+note: Interfaze publishes no first-party hosted MCP server (the JigsawStack MCP server at github.com/InterfazeAI/jigsawstack-mcp-server
+  targets the separate JigsawStack API, not the interfaze-beta Chat Completion API). This is a DERIVED
+  candidate tool surface generated from the OpenAPI so the single endpoint can be wrapped as an MCP tool.
+  Interfaze exposes its agentic surface primarily as Agent Skills (skills/) and an A2A Agent Card (well-known/).
 server:
   name: interfaze
   transport: http
   base_url: https://api.interfaze.ai/v1
 tools:
 - name: create_chat_completion
-  description: >-
-    Create a model response for a chat conversation with interfaze-beta. Multimodal input (text,
-    image, audio, file, video) drives deterministic tasks (OCR, STT, structured output, object
-    detection, web search, web scraping) through one OpenAI-compatible endpoint.
+  description: Create a model response for a chat conversation with interfaze-beta. Multimodal input (text,
+    image, audio, file, video) drives deterministic tasks (OCR, STT, structured output, object detection,
+    web search, web scraping) through one OpenAI-compatible endpoint.
   source_operation: openapi/interfaze-openapi-original.json#createChatCompletion
+deployment:
+  mode: none
+  verified: derived
+  tools: 1
+  checked: '2026-08-12'
+  source: catalog MCP census
