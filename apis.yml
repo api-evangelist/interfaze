@@ -89,6 +89,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Website
+  url: https://www.interfaze.ai/
 - type: AgentCard
   url: a2a/interfaze-a2a.yml
   name: A2A Agent Card
