@@ -150,6 +150,8 @@ common:
   url: authentication/interfaze-authentication.yml
 - type: DomainSecurity
   url: security/interfaze-domain-security.yml
+- type: Contact
+  url: mailto:support@interfaze.ai
 x-enrichment:
   date: '2026-07-19'
   status: backfilled
