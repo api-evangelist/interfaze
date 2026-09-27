@@ -132,42 +132,74 @@ paths:
       - Chat
 components:
   schemas:
-    Usage:
-      type: object
-      description: Token usage statistics.
-      properties:
-        prompt_tokens:
-          type: integer
-          description: Number of tokens in the prompt.
-        completion_tokens:
-          type: integer
-          description: Number of tokens in the completion.
-        total_tokens:
-          type: integer
-          description: Total tokens used (prompt + completion).
-    FilePart:
+    ImagePart:
       type: object
       required:
       - type
-      - file
+      - image_url
       properties:
         type:
           type: string
-          const: file
-          description: Must be `"file"`.
-        file:
+          const: image_url
+          description: Must be `"image_url"`.
+        image_url:
           type: object
           required:
-          - filename
-          - file_data
-          description: Wrapper object containing the file source.
+          - url
+          description: Wrapper object containing the image source.
           properties:
-            filename:
+            url:
               type: string
-              description: Filename including extension. Used for MIME inference.
-            file_data:
-              type: string
-              description: Publicly accessible URL or base64 data URL (`data:<mime>;base64,...`).
+              description: Publicly accessible URL or base64 data URL (`data:image/jpeg;base64,...`).
+    Choice:
+      type: object
+      description: A single completion choice.
+      properties:
+        index:
+          type: integer
+          description: The index of this choice in the `choices` array.
+        message:
+          $ref: '#/components/schemas/Message'
+        finish_reason:
+          type: string
+          enum:
+          - stop
+          - length
+          - tool_calls
+          description: The reason the model stopped generating. `stop` = natural end or stop sequence, `length` = max tokens reached, `tool_calls` = model wants to call a tool.
+    Message:
+      type: object
+      required:
+      - role
+      - content
+      description: A single message in the conversation.
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          description: The role of the message author.
+        content:
+          description: The message content. Either a plain string or an array of content parts for multimodal input.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              $ref: '#/components/schemas/ContentPart'
+        name:
+          type: string
+          description: Optional name of the participant.
+        tool_calls:
+          type: array
+          description: Assistant-only. Tool calls the model wants the caller to execute.
+          items:
+            $ref: '#/components/schemas/ToolCall'
+        tool_call_id:
+          type: string
+          description: Tool-message-only. The id of the tool call this message is responding to.
     TextPart:
       type: object
       required:
@@ -181,6 +213,27 @@ components:
         text:
           type: string
           description: The text content.
+    ErrorObject:
+      type: object
+      description: Error details.
+      properties:
+        message:
+          type: string
+          description: A human-readable error message.
+        type:
+          type: string
+          description: Error type (e.g. `invalid_request_error`, `authentication_error`, `rate_limit_error`).
+          enum:
+          - invalid_request_error
+          - authentication_error
+          - insufficient_quota
+          - payload_too_large
+          - rate_limit_error
+          - internal_error
+          - service_unavailable
+        code:
+          type: string
+          description: A machine-readable error code.
     ToolChoice:
       description: Controls which (if any) tool the model calls. `"auto"` = model decides, `"none"` = no tool calls, `"required"` = must call at least one tool, or an object to force a specific function.
       oneOf:
@@ -207,29 +260,78 @@ components:
               name:
                 type: string
                 description: The name of the function to force.
-    ErrorEnvelope:
+    ChatCompletionChunk:
       type: object
-      description: Error response wrapper.
+      description: A single chunk in a streaming response.
       properties:
-        error:
-          $ref: '#/components/schemas/ErrorObject'
-      example:
-        error:
-          message: Invalid API key provided.
-          type: invalid_request_error
-          code: invalid_api_key
-    ContentPart:
-      description: A typed content part for multimodal input. Discriminated by `type`.
-      oneOf:
-      - $ref: '#/components/schemas/TextPart'
-      - $ref: '#/components/schemas/ImagePart'
-      - $ref: '#/components/schemas/FilePart'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/TextPart'
-          image_url: '#/components/schemas/ImagePart'
-          file: '#/components/schemas/FilePart'
+        id:
+          type: string
+          description: Unique identifier for the completion.
+        object:
+          type: string
+          const: chat.completion.chunk
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              delta:
+                type: object
+                description: Partial message content.
+                properties:
+                  role:
+                    type: string
+                  content:
+                    type: string
+              finish_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - stop
+                - length
+                - tool_calls
+                - null
+    PrecontextEntry:
+      type: object
+      description: Raw output from an internal task the model performed.
+      properties:
+        name:
+          type: string
+          description: The task that produced this result (e.g. `ocr`, `stt`, `translate`, `web_search`, `scraper`, `object_detection`, `guardrails`, `code_sandbox`).
+        result:
+          description: The structured metadata for the task. Shape varies per task type.
+    ToolFunction:
+      type: object
+      required:
+      - name
+      description: The function definition for a tool.
+      properties:
+        name:
+          type: string
+          description: Unique function name (snake_case recommended).
+        description:
+          type: string
+          description: What the function does. Helps the model decide when to call it.
+        parameters:
+          type: object
+          description: JSON Schema describing the function's arguments.
+          additionalProperties: true
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      description: A tool the model may call.
+      properties:
+        type:
+          type: string
+          const: function
+          description: Always `"function"`.
+        function:
+          $ref: '#/components/schemas/ToolFunction'
     ChatCompletionRequest:
       type: object
       required:
@@ -285,15 +387,29 @@ components:
           minimum: 0
           maximum: 1
           description: Nucleus sampling. The model considers only the tokens whose cumulative probability mass is `top_p`. `0.1` means only the top 10% of probability mass is sampled from. Generally only adjust one of `temperature` or `top_p`.
-    PrecontextEntry:
+    FilePart:
       type: object
-      description: Raw output from an internal task the model performed.
+      required:
+      - type
+      - file
       properties:
-        name:
+        type:
           type: string
-          description: The task that produced this result (e.g. `ocr`, `stt`, `translate`, `web_search`, `scraper`, `object_detection`, `guardrails`, `code_sandbox`).
-        result:
-          description: The structured metadata for the task. Shape varies per task type.
+          const: file
+          description: Must be `"file"`.
+        file:
+          type: object
+          required:
+          - filename
+          - file_data
+          description: Wrapper object containing the file source.
+          properties:
+            filename:
+              type: string
+              description: Filename including extension. Used for MIME inference.
+            file_data:
+              type: string
+              description: Publicly accessible URL or base64 data URL (`data:<mime>;base64,...`).
     ChatCompletionResponse:
       type: object
       description: A successful non-streaming chat completion response.
@@ -349,27 +465,30 @@ components:
           - title: Interfaze | Y Combinator
             url: https://www.ycombinator.com/companies/interfaze
             description: AI model built for deterministic developer tasks.
-    ErrorObject:
+    Usage:
       type: object
-      description: Error details.
+      description: Token usage statistics.
       properties:
-        message:
-          type: string
-          description: A human-readable error message.
-        type:
-          type: string
-          description: Error type (e.g. `invalid_request_error`, `authentication_error`, `rate_limit_error`).
-          enum:
-          - invalid_request_error
-          - authentication_error
-          - insufficient_quota
-          - payload_too_large
-          - rate_limit_error
-          - internal_error
-          - service_unavailable
-        code:
-          type: string
-          description: A machine-readable error code.
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the completion.
+        total_tokens:
+          type: integer
+          description: Total tokens used (prompt + completion).
+    ErrorEnvelope:
+      type: object
+      description: Error response wrapper.
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorObject'
+      example:
+        error:
+          message: Invalid API key provided.
+          type: invalid_request_error
+          code: invalid_api_key
     ResponseFormat:
       description: Constrains the model output to a specific format. Follows the [OpenAI structured output specification](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat).
       oneOf:
@@ -410,59 +529,6 @@ components:
                 type: boolean
                 default: false
                 description: Whether to strictly enforce the schema.
-    ImagePart:
-      type: object
-      required:
-      - type
-      - image_url
-      properties:
-        type:
-          type: string
-          const: image_url
-          description: Must be `"image_url"`.
-        image_url:
-          type: object
-          required:
-          - url
-          description: Wrapper object containing the image source.
-          properties:
-            url:
-              type: string
-              description: Publicly accessible URL or base64 data URL (`data:image/jpeg;base64,...`).
-    ChatCompletionChunk:
-      type: object
-      description: A single chunk in a streaming response.
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the completion.
-        object:
-          type: string
-          const: chat.completion.chunk
-        choices:
-          type: array
-          items:
-            type: object
-            properties:
-              index:
-                type: integer
-              delta:
-                type: object
-                description: Partial message content.
-                properties:
-                  role:
-                    type: string
-                  content:
-                    type: string
-              finish_reason:
-                type:
-                - string
-                - 'null'
-                enum:
-                - stop
-                - length
-                - tool_calls
-                - null
     ToolCall:
       type: object
       required:
@@ -489,84 +555,18 @@ components:
             arguments:
               type: string
               description: JSON-encoded arguments for the function.
-    ToolFunction:
-      type: object
-      required:
-      - name
-      description: The function definition for a tool.
-      properties:
-        name:
-          type: string
-          description: Unique function name (snake_case recommended).
-        description:
-          type: string
-          description: What the function does. Helps the model decide when to call it.
-        parameters:
-          type: object
-          description: JSON Schema describing the function's arguments.
-          additionalProperties: true
-    Tool:
-      type: object
-      required:
-      - type
-      - function
-      description: A tool the model may call.
-      properties:
-        type:
-          type: string
-          const: function
-          description: Always `"function"`.
-        function:
-          $ref: '#/components/schemas/ToolFunction'
-    Message:
-      type: object
-      required:
-      - role
-      - content
-      description: A single message in the conversation.
-      properties:
-        role:
-          type: string
-          enum:
-          - system
-          - user
-          - assistant
-          - tool
-          description: The role of the message author.
-        content:
-          description: The message content. Either a plain string or an array of content parts for multimodal input.
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              $ref: '#/components/schemas/ContentPart'
-        name:
-          type: string
-          description: Optional name of the participant.
-        tool_calls:
-          type: array
-          description: Assistant-only. Tool calls the model wants the caller to execute.
-          items:
-            $ref: '#/components/schemas/ToolCall'
-        tool_call_id:
-          type: string
-          description: Tool-message-only. The id of the tool call this message is responding to.
-    Choice:
-      type: object
-      description: A single completion choice.
-      properties:
-        index:
-          type: integer
-          description: The index of this choice in the `choices` array.
-        message:
-          $ref: '#/components/schemas/Message'
-        finish_reason:
-          type: string
-          enum:
-          - stop
-          - length
-          - tool_calls
-          description: The reason the model stopped generating. `stop` = natural end or stop sequence, `length` = max tokens reached, `tool_calls` = model wants to call a tool.
+    ContentPart:
+      description: A typed content part for multimodal input. Discriminated by `type`.
+      oneOf:
+      - $ref: '#/components/schemas/TextPart'
+      - $ref: '#/components/schemas/ImagePart'
+      - $ref: '#/components/schemas/FilePart'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextPart'
+          image_url: '#/components/schemas/ImagePart'
+          file: '#/components/schemas/FilePart'
   securitySchemes:
     bearerAuth:
       type: http

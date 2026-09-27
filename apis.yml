@@ -49,7 +49,7 @@ modified: '2026-07-19'
 tags:
 - Company
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - LLM
 - OCR
 - Speech-to-Text
@@ -59,6 +59,7 @@ tags:
 - Web Search
 - Multi-Modal
 - Developer Tools
+- A2A
 tags_raw:
 - Company
 - Artificial Intelligence
@@ -72,6 +73,8 @@ tags_raw:
 - Web Search
 - Multimodal
 - Developer Tools
+- Machine-Learning
+- A2A
 apis:
 - aid: interfaze:interfaze-chat-api
   name: Interfaze Chat API
@@ -157,3 +160,10 @@ x-enrichment:
   status: backfilled
   pass: local-v1
   note: backfilled from .gitignore signal + verified work evidence
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://interfaze.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
