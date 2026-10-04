@@ -76,16 +76,16 @@ tags_raw:
 - Machine-Learning
 - A2A
 apis:
-- aid: interfaze:interfaze-chat-api
-  name: Interfaze Chat API
-  description: The Chat API from Interfaze — 1 operation(s) for chat.
+- aid: interfaze:interfaze-chat-completions-api
+  name: Interfaze Chat Completions API
+  description: The Chat Completions API from Interfaze — 1 operation(s) for chat completions.
   humanURL: https://interfaze.ai/docs
   baseURL: https://api.interfaze.ai/v1
   tags:
-  - Chat
+  - Chat Completions
   properties:
   - type: OpenAPI
-    url: openapi/interfaze-chat-api-openapi.yml
+    url: openapi/interfaze-chat-completions-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
