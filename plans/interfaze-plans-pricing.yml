@@ -1,0 +1,107 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://interfaze.ai/pricing
+sources:
+- https://interfaze.ai/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+delivery:
+  delivery: open-core
+  method: page
+  read: '2026-10-07'
+  evidence: interfaze-1-lite has open weights on Hugging Face (interfaze-ai/interfaze-1-lite) under the
+    Apache 2.0 license and runs on a single 80 GB GPU with no external services
+  free_edition: Interfaze 1 Lite
+  managed_tier: Interfaze 1 Lite
+  open_source_license: Apache 2.0
+published: true
+note: Token-based pricing per model plus estimated per-task costs; enterprise tier unpriced. interfaze-1-lite
+  open weights under Apache 2.0 for self-hosting.
+plan_count: 5
+currency: USD
+plans:
+- name: Interfaze 1 — Input
+  price_text: $1.50 / MTok
+  price: 1.5
+  currency: USD
+  period: per-use
+  unit: MTok input
+  included_quota: Context window 1M tokens, Max output 32k tokens, reasoning available
+- name: Interfaze 1 — Output
+  price_text: $3.50 / MTok
+  price: 3.5
+  currency: USD
+  period: per-use
+  unit: MTok output
+- name: Interfaze 1 Lite — Input
+  price_text: $0.85 / MTok
+  price: 0.85
+  currency: USD
+  period: per-use
+  unit: MTok input
+  included_quota: Open weights, context window 128k tokens
+- name: Interfaze 1 Lite — Output
+  price_text: $1.50 / MTok
+  price: 1.5
+  currency: USD
+  period: per-use
+  unit: MTok output
+- name: Enterprise/Custom plan
+  price_text: Contact sales
+  period: none
+  included_quota: Volume discounts, unlimited rate limiting, SLAs, self-hosted/VPC deployment, SOC2 &
+    HIPAA, priority 24×7×365 support
+rate_limit_statements:
+- You can make 50 requests per second. If you need more, please contact us at support@interfaze.ai
+- Rate limiting Unlimited
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Interfaze 1 — Input
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Interfaze 1 — Output
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Interfaze 1 Lite — Input
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Interfaze 1 Lite — Output
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Enterprise/Custom plan
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
