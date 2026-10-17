@@ -132,61 +132,6 @@ paths:
       - Chat Completions
 components:
   schemas:
-    ChatCompletionResponse:
-      type: object
-      description: A successful non-streaming chat completion response.
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the completion.
-          example: interfaze-1775270750639
-        object:
-          type: string
-          const: chat.completion
-          description: Always `chat.completion`.
-        model:
-          type: string
-          description: The model used.
-          example: interfaze-beta
-        choices:
-          type: array
-          description: A list of completion choices.
-          items:
-            $ref: '#/components/schemas/Choice'
-        usage:
-          $ref: '#/components/schemas/Usage'
-        reasoning:
-          type: string
-          description: Present when `reasoning_effort` is set. The model's thinking trace.
-        precontext:
-          type: array
-          description: Raw outputs from any internal tasks the model ran (OCR, STT, web search, etc.).
-          items:
-            $ref: '#/components/schemas/PrecontextEntry'
-        vcache:
-          type: boolean
-          description: Whether the response was served from the model's verified cache.
-      example:
-        id: interfaze-1775270750639
-        object: chat.completion
-        model: interfaze-beta
-        choices:
-        - index: 0
-          message:
-            role: assistant
-            content: '{"name":"Yoeven D Khemlani"}'
-          finish_reason: stop
-        usage:
-          prompt_tokens: 10512
-          completion_tokens: 7056
-          total_tokens: 17568
-        vcache: false
-        precontext:
-        - name: web_search
-          result:
-          - title: Interfaze | Y Combinator
-            url: https://www.ycombinator.com/companies/interfaze
-            description: AI model built for deterministic developer tasks.
     Usage:
       type: object
       description: Token usage statistics.
@@ -200,182 +145,27 @@ components:
         total_tokens:
           type: integer
           description: Total tokens used (prompt + completion).
-    ChatCompletionRequest:
+    ErrorObject:
       type: object
-      required:
-      - model
-      - messages
+      description: Error details.
       properties:
-        model:
+        message:
           type: string
-          description: Model id to use. Currently the only supported value is `interfaze-beta`.
-          enum:
-          - interfaze-beta
-          example: interfaze-beta
-        messages:
-          type: array
-          description: A list of messages making up the conversation so far.
-          items:
-            $ref: '#/components/schemas/Message'
-        stream:
-          type: boolean
-          default: false
-          description: 'If `true`, partial message deltas are sent as server-sent events. The stream terminates with `data: [DONE]`.'
-        response_format:
-          $ref: '#/components/schemas/ResponseFormat'
-        tools:
-          type: array
-          description: A list of tools (functions) the model may call. Follows the [OpenAI function calling](https://developers.openai.com/api/docs/guides/function-calling?api-mode=chat) schema.
-          items:
-            $ref: '#/components/schemas/Tool'
-        tool_choice:
-          $ref: '#/components/schemas/ToolChoice'
-        reasoning_effort:
-          type: string
-          enum:
-          - low
-          - medium
-          - high
-          description: Enables extended reasoning. The model spends more compute and thinking tokens before producing a final answer. `low` = light reasoning pass, `medium` = moderate reasoning, `high` = deep reasoning (recommended for math, science, complex agents). When set, the response contains a `reasoning` field. In streaming mode, reasoning tokens stream first inside `<think>...</think>` tags. Off by default.
-        max_tokens:
-          type: integer
-          default: 32000
-          minimum: 1
-          maximum: 32000
-          description: Maximum number of tokens to generate in the completion. Hard upper bound of 32,000 tokens.
-        temperature:
-          type: number
-          default: 1
-          minimum: 0
-          maximum: 2
-          description: Sampling temperature between `0` and `2`. Higher values produce more random output, lower values make the output more focused and deterministic.
-        top_p:
-          type: number
-          default: 1
-          minimum: 0
-          maximum: 1
-          description: Nucleus sampling. The model considers only the tokens whose cumulative probability mass is `top_p`. `0.1` means only the top 10% of probability mass is sampled from. Generally only adjust one of `temperature` or `top_p`.
-    ChatCompletionChunk:
-      type: object
-      description: A single chunk in a streaming response.
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the completion.
-        object:
-          type: string
-          const: chat.completion.chunk
-        choices:
-          type: array
-          items:
-            type: object
-            properties:
-              index:
-                type: integer
-              delta:
-                type: object
-                description: Partial message content.
-                properties:
-                  role:
-                    type: string
-                  content:
-                    type: string
-              finish_reason:
-                type:
-                - string
-                - 'null'
-                enum:
-                - stop
-                - length
-                - tool_calls
-                - null
-    ToolCall:
-      type: object
-      required:
-      - id
-      - type
-      - function
-      description: A tool call requested by the assistant.
-      properties:
-        id:
-          type: string
-          description: Unique id for this tool call.
+          description: A human-readable error message.
         type:
           type: string
-          const: function
-        function:
-          type: object
-          required:
-          - name
-          - arguments
-          properties:
-            name:
-              type: string
-              description: The function name to call.
-            arguments:
-              type: string
-              description: JSON-encoded arguments for the function.
-    Message:
-      type: object
-      required:
-      - role
-      - content
-      description: A single message in the conversation.
-      properties:
-        role:
-          type: string
+          description: Error type (e.g. `invalid_request_error`, `authentication_error`, `rate_limit_error`).
           enum:
-          - system
-          - user
-          - assistant
-          - tool
-          description: The role of the message author.
-        content:
-          description: The message content. Either a plain string or an array of content parts for multimodal input.
-          oneOf:
-          - type: string
-          - type: array
-            items:
-              $ref: '#/components/schemas/ContentPart'
-        name:
+          - invalid_request_error
+          - authentication_error
+          - insufficient_quota
+          - payload_too_large
+          - rate_limit_error
+          - internal_error
+          - service_unavailable
+        code:
           type: string
-          description: Optional name of the participant.
-        tool_calls:
-          type: array
-          description: Assistant-only. Tool calls the model wants the caller to execute.
-          items:
-            $ref: '#/components/schemas/ToolCall'
-        tool_call_id:
-          type: string
-          description: Tool-message-only. The id of the tool call this message is responding to.
-    Choice:
-      type: object
-      description: A single completion choice.
-      properties:
-        index:
-          type: integer
-          description: The index of this choice in the `choices` array.
-        message:
-          $ref: '#/components/schemas/Message'
-        finish_reason:
-          type: string
-          enum:
-          - stop
-          - length
-          - tool_calls
-          description: The reason the model stopped generating. `stop` = natural end or stop sequence, `length` = max tokens reached, `tool_calls` = model wants to call a tool.
-    ContentPart:
-      description: A typed content part for multimodal input. Discriminated by `type`.
-      oneOf:
-      - $ref: '#/components/schemas/TextPart'
-      - $ref: '#/components/schemas/ImagePart'
-      - $ref: '#/components/schemas/FilePart'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/TextPart'
-          image_url: '#/components/schemas/ImagePart'
-          file: '#/components/schemas/FilePart'
+          description: A machine-readable error code.
     ImagePart:
       type: object
       required:
@@ -404,95 +194,22 @@ components:
           description: The task that produced this result (e.g. `ocr`, `stt`, `translate`, `web_search`, `scraper`, `object_detection`, `guardrails`, `code_sandbox`).
         result:
           description: The structured metadata for the task. Shape varies per task type.
-    Tool:
+    Choice:
       type: object
-      required:
-      - type
-      - function
-      description: A tool the model may call.
+      description: A single completion choice.
       properties:
-        type:
-          type: string
-          const: function
-          description: Always `"function"`.
-        function:
-          $ref: '#/components/schemas/ToolFunction'
-    ToolChoice:
-      description: Controls which (if any) tool the model calls. `"auto"` = model decides, `"none"` = no tool calls, `"required"` = must call at least one tool, or an object to force a specific function.
-      oneOf:
-      - type: string
-        title: String
-        enum:
-        - auto
-        - none
-        - required
-      - type: object
-        title: Named function
-        required:
-        - type
-        - function
-        properties:
-          type:
-            type: string
-            const: function
-          function:
-            type: object
-            required:
-            - name
-            properties:
-              name:
-                type: string
-                description: The name of the function to force.
-    TextPart:
-      type: object
-      required:
-      - type
-      - text
-      properties:
-        type:
-          type: string
-          const: text
-          description: Must be `"text"`.
-        text:
-          type: string
-          description: The text content.
-    ToolFunction:
-      type: object
-      required:
-      - name
-      description: The function definition for a tool.
-      properties:
-        name:
-          type: string
-          description: Unique function name (snake_case recommended).
-        description:
-          type: string
-          description: What the function does. Helps the model decide when to call it.
-        parameters:
-          type: object
-          description: JSON Schema describing the function's arguments.
-          additionalProperties: true
-    ErrorObject:
-      type: object
-      description: Error details.
-      properties:
+        index:
+          type: integer
+          description: The index of this choice in the `choices` array.
         message:
+          $ref: '#/components/schemas/Message'
+        finish_reason:
           type: string
-          description: A human-readable error message.
-        type:
-          type: string
-          description: Error type (e.g. `invalid_request_error`, `authentication_error`, `rate_limit_error`).
           enum:
-          - invalid_request_error
-          - authentication_error
-          - insufficient_quota
-          - payload_too_large
-          - rate_limit_error
-          - internal_error
-          - service_unavailable
-        code:
-          type: string
-          description: A machine-readable error code.
+          - stop
+          - length
+          - tool_calls
+          description: The reason the model stopped generating. `stop` = natural end or stop sequence, `length` = max tokens reached, `tool_calls` = model wants to call a tool.
     ResponseFormat:
       description: Constrains the model output to a specific format. Follows the [OpenAI structured output specification](https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat).
       oneOf:
@@ -567,6 +284,289 @@ components:
           message: Invalid API key provided.
           type: invalid_request_error
           code: invalid_api_key
+    ChatCompletionResponse:
+      type: object
+      description: A successful non-streaming chat completion response.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the completion.
+          example: interfaze-1775270750639
+        object:
+          type: string
+          const: chat.completion
+          description: Always `chat.completion`.
+        model:
+          type: string
+          description: The model used.
+          example: interfaze-beta
+        choices:
+          type: array
+          description: A list of completion choices.
+          items:
+            $ref: '#/components/schemas/Choice'
+        usage:
+          $ref: '#/components/schemas/Usage'
+        reasoning:
+          type: string
+          description: Present when `reasoning_effort` is set. The model's thinking trace.
+        precontext:
+          type: array
+          description: Raw outputs from any internal tasks the model ran (OCR, STT, web search, etc.).
+          items:
+            $ref: '#/components/schemas/PrecontextEntry'
+        vcache:
+          type: boolean
+          description: Whether the response was served from the model's verified cache.
+      example:
+        id: interfaze-1775270750639
+        object: chat.completion
+        model: interfaze-beta
+        choices:
+        - index: 0
+          message:
+            role: assistant
+            content: '{"name":"Yoeven D Khemlani"}'
+          finish_reason: stop
+        usage:
+          prompt_tokens: 10512
+          completion_tokens: 7056
+          total_tokens: 17568
+        vcache: false
+        precontext:
+        - name: web_search
+          result:
+          - title: Interfaze | Y Combinator
+            url: https://www.ycombinator.com/companies/interfaze
+            description: AI model built for deterministic developer tasks.
+    ToolCall:
+      type: object
+      required:
+      - id
+      - type
+      - function
+      description: A tool call requested by the assistant.
+      properties:
+        id:
+          type: string
+          description: Unique id for this tool call.
+        type:
+          type: string
+          const: function
+        function:
+          type: object
+          required:
+          - name
+          - arguments
+          properties:
+            name:
+              type: string
+              description: The function name to call.
+            arguments:
+              type: string
+              description: JSON-encoded arguments for the function.
+    Tool:
+      type: object
+      required:
+      - type
+      - function
+      description: A tool the model may call.
+      properties:
+        type:
+          type: string
+          const: function
+          description: Always `"function"`.
+        function:
+          $ref: '#/components/schemas/ToolFunction'
+    ToolFunction:
+      type: object
+      required:
+      - name
+      description: The function definition for a tool.
+      properties:
+        name:
+          type: string
+          description: Unique function name (snake_case recommended).
+        description:
+          type: string
+          description: What the function does. Helps the model decide when to call it.
+        parameters:
+          type: object
+          description: JSON Schema describing the function's arguments.
+          additionalProperties: true
+    ChatCompletionChunk:
+      type: object
+      description: A single chunk in a streaming response.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the completion.
+        object:
+          type: string
+          const: chat.completion.chunk
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              delta:
+                type: object
+                description: Partial message content.
+                properties:
+                  role:
+                    type: string
+                  content:
+                    type: string
+              finish_reason:
+                type:
+                - string
+                - 'null'
+                enum:
+                - stop
+                - length
+                - tool_calls
+                - null
+    TextPart:
+      type: object
+      required:
+      - type
+      - text
+      properties:
+        type:
+          type: string
+          const: text
+          description: Must be `"text"`.
+        text:
+          type: string
+          description: The text content.
+    ContentPart:
+      description: A typed content part for multimodal input. Discriminated by `type`.
+      oneOf:
+      - $ref: '#/components/schemas/TextPart'
+      - $ref: '#/components/schemas/ImagePart'
+      - $ref: '#/components/schemas/FilePart'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextPart'
+          image_url: '#/components/schemas/ImagePart'
+          file: '#/components/schemas/FilePart'
+    Message:
+      type: object
+      required:
+      - role
+      - content
+      description: A single message in the conversation.
+      properties:
+        role:
+          type: string
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          description: The role of the message author.
+        content:
+          description: The message content. Either a plain string or an array of content parts for multimodal input.
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              $ref: '#/components/schemas/ContentPart'
+        name:
+          type: string
+          description: Optional name of the participant.
+        tool_calls:
+          type: array
+          description: Assistant-only. Tool calls the model wants the caller to execute.
+          items:
+            $ref: '#/components/schemas/ToolCall'
+        tool_call_id:
+          type: string
+          description: Tool-message-only. The id of the tool call this message is responding to.
+    ChatCompletionRequest:
+      type: object
+      required:
+      - model
+      - messages
+      properties:
+        model:
+          type: string
+          description: Model id to use. Currently the only supported value is `interfaze-beta`.
+          enum:
+          - interfaze-beta
+          example: interfaze-beta
+        messages:
+          type: array
+          description: A list of messages making up the conversation so far.
+          items:
+            $ref: '#/components/schemas/Message'
+        stream:
+          type: boolean
+          default: false
+          description: 'If `true`, partial message deltas are sent as server-sent events. The stream terminates with `data: [DONE]`.'
+        response_format:
+          $ref: '#/components/schemas/ResponseFormat'
+        tools:
+          type: array
+          description: A list of tools (functions) the model may call. Follows the [OpenAI function calling](https://developers.openai.com/api/docs/guides/function-calling?api-mode=chat) schema.
+          items:
+            $ref: '#/components/schemas/Tool'
+        tool_choice:
+          $ref: '#/components/schemas/ToolChoice'
+        reasoning_effort:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          description: Enables extended reasoning. The model spends more compute and thinking tokens before producing a final answer. `low` = light reasoning pass, `medium` = moderate reasoning, `high` = deep reasoning (recommended for math, science, complex agents). When set, the response contains a `reasoning` field. In streaming mode, reasoning tokens stream first inside `<think>...</think>` tags. Off by default.
+        max_tokens:
+          type: integer
+          default: 32000
+          minimum: 1
+          maximum: 32000
+          description: Maximum number of tokens to generate in the completion. Hard upper bound of 32,000 tokens.
+        temperature:
+          type: number
+          default: 1
+          minimum: 0
+          maximum: 2
+          description: Sampling temperature between `0` and `2`. Higher values produce more random output, lower values make the output more focused and deterministic.
+        top_p:
+          type: number
+          default: 1
+          minimum: 0
+          maximum: 1
+          description: Nucleus sampling. The model considers only the tokens whose cumulative probability mass is `top_p`. `0.1` means only the top 10% of probability mass is sampled from. Generally only adjust one of `temperature` or `top_p`.
+    ToolChoice:
+      description: Controls which (if any) tool the model calls. `"auto"` = model decides, `"none"` = no tool calls, `"required"` = must call at least one tool, or an object to force a specific function.
+      oneOf:
+      - type: string
+        title: String
+        enum:
+        - auto
+        - none
+        - required
+      - type: object
+        title: Named function
+        required:
+        - type
+        - function
+        properties:
+          type:
+            type: string
+            const: function
+          function:
+            type: object
+            required:
+            - name
+            properties:
+              name:
+                type: string
+                description: The name of the function to force.
   securitySchemes:
     bearerAuth:
       type: http

@@ -6,7 +6,9 @@
   "outputs": [
     "interfaze-chat-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -14,9 +16,10 @@
     "interfaze-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "interfaze-openapi-original.json: tagged paths POST /chat/completions -> Chat",
     "interfaze-openapi-original.json: declared missing tag: Chat",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: interfaze-chat-completions-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 1 total)"
   ],
   "skipped": [
-    "interfaze-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "interfaze-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }
