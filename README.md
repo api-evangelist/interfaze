@@ -64,6 +64,127 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Interfaze is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Interfaze is a Y Combinator (P26) startup building a new model architecture for deterministic developer tasks. Interfaze-beta is a multimodal, OpenAI-compatible Chat Completion API (a hybrid Mixture-of-Architecture combining specialized DNN/CNN vision and audio models with a transformer layer) tuned for high accuracy, precision, and consistency on jobs like OCR, speech-to-text, strict structured/JSON output, object detection with bounding boxes, web search, and web scraping through a single endpoint. It exposes a 1M-token context window, 32k max output, verifiable outputs with confidence scores, built-in sandboxed compute and headless browser tools, and works with the OpenAI, Vercel AI, and LangChain SDKs by swapping the base URL. Founded in 2025 by Yoeven D Khemlani and Harsha Vardhan Khurdula (evolved from JigsawStack) and based in San Francisco.
 
-Backed by: y-combinator
+**Areas:** Company · Artificial Intelligence · Machine Learning · LLM · OCR · Speech-to-Text · Structured Output · Object Detection · Web Scraping · Web Search · Multi-Modal · Developer Tools
+
+## Interfaze on APIs.io
+
+Everything profiled for Interfaze is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/interfaze/](https://apis.io/providers/interfaze/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Interfaze Chat Completions API](https://apis.io/apis/interfaze/interfaze-chat-completions-api/) — The Chat Completions API from Interfaze — 1 operation(s) for chat completions.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [interfaze](https://apis.io/servers/interfaze/interfaze/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Interfaze Agentic Access](https://apis.io/agentic-access/interfaze/interfaze-agentic-access/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [Interfaze Chat API](https://apis.io/collections/interfaze/open-interfaze-chat-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Interfaze Openapi Overlay](https://apis.io/overlays/interfaze/interfaze-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Interfaze Authentication](https://apis.io/security/interfaze/interfaze-authentication/)
+- [Interfaze Domain Security](https://apis.io/security/interfaze/interfaze-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Interfaze Plans Pricing](https://apis.io/plans/interfaze/interfaze-plans-pricing/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.interfaze.ai/)
+- [Documentation](https://interfaze.ai/docs)
+- [Getting started](https://interfaze.ai/docs)
+- [API reference](https://interfaze.ai/docs/api/chat-completion)
+- [Pricing](https://interfaze.ai/pricing)
+- [Sign up](https://interfaze.ai/dashboard)
+- [Support](https://interfaze.ai/help)
+- [Blog](https://interfaze.ai/blog)
+- [Terms of service](https://interfaze.ai/legal/terms)
+- [Privacy policy](https://interfaze.ai/legal/privacy)
+- [GitHub](https://github.com/InterfazeAI)
+- [Status](https://status.interfaze.ai)
+
+## API Evangelist rating
+
+**Kin Score 52.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 50.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 64.3 |
+| Access clarity | 76.3 |
+
+**Agent readiness 32.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | near-conformant (partial credit) |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 22.7** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/interfaze/](https://apis.io/providers/interfaze/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Interfaze: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/interfaze/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
